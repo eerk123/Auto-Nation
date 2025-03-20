@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonation - Next-Gen Car Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+         :root {
+            --primary: #00ff88;
+            --dark: #121212;
+            --light: #ffffff;
+            --card-bg: #1e1e1e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+        }
+        
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8') center/cover;
+        }
+        
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 5%;
+        }
+        
+        .car-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            transform: translateY(0);
+            cursor: pointer;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+        }
+        
+        .car-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .car-price {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        
+        .car-info {
+            padding: 1.5rem;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+        }
+        
+        button {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">AUTONATION</div>
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#market">Sell</a>
+            <a href="#login" id="authBtn">Login</a>
+            <a href="#profile" id="profileBtn" style="display: none;">
+                <i class="fas fa-user"></i>
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title">Revolutionizing Car Trade</h1>
+        <p class="hero-subtitle">Discover, Buy, and Sell Premium Vehicles</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search makes, models, or keywords...">
+            <button>Search</button>
+        </div>
+    </section>
+
+    <section id="car-list" class="car-grid"></section>
+
+    <div class="modal" id="carModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="carModalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const cars = [{
+            name: "Tesla Model S Plaid",
+            price: "129,999",
+            image: "https://images.unsplash.com/photo-1555215695-3004980ad54e",
+            specs: ["0-60mph: 1.99s", "396mi Range", "1,020hp"],
+            contact: "sales@tesla.com"
+        }, {
+            name: "Porsche 911 GT3",
+            price: "179,999",
+            image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537",
+            specs: ["4.0L Flat-6", "502hp", "6-speed Manual"],
+            contact: "porsche@example.com"
+        }];
+
+        function renderCars() {
+            const grid = document.getElementById('car-list');
+            grid.innerHTML = cars.map(car => `
+                <div class="car-card">
+                    <div class="car-image" style="background-image: url(${car.image})">
+                        <div class="car-price">$${car.price}</div>
+                    </div>
+                    <div class="car-info">
+                        <h3>${car.name}</h3>
+                        <div class="specs">
+                            ${car.specs.map(spec => <span>${spec}</span>).join('')}
+                        </div>
+                        <button onclick="showCarModal('${car.name}')">View Details</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showCarModal(carName) {
+            const car = cars.find(c => c.name === carName);
+            const modal = document.getElementById('carModal');
+            modal.style.display = 'flex';
+            document.getElementById('carModalContent').innerHTML = `
+                <h2>${car.name}</h2>
+                <div class="car-image" style="background-image: url(${car.image})"></div>
+                <div class="specs">
+                    ${car.specs.map(spec => <span>${spec}</span>).join('')}
+                </div>
+                <p>Seller Contact: ${car.contact}</p>
+                <button>Make Offer</button>
+            `;
+        }
+
+        // Modal close functionality
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target.classList.contains('close')) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Auth system simulation
+        document.getElementById('authBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            // Implement actual auth flow here
+            document.getElementById('authBtn').style.display = 'none';
+            document.getElementById('profileBtn').style.display = 'block';
+        });
+
+        // Initial render
+        renderCars();
+
+        // Intersection Observer for animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.car-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            observer.observe(card);
+        });
+    </script>
+</body>
+
+</html>
+cdnjs.cloudflare.com
