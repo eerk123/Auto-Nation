@@ -14,6 +14,15 @@
             --card-bg: #1e1e1e;
         }
         
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            max-width: 625px;
+            z-index: 1;
+            margin-top: 30px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -75,7 +84,7 @@
             flex-direction: column;
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8') center/cover;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url("home-background.jpg") center/cover;
         }
         
         .car-grid {
@@ -179,7 +188,7 @@
 
 <body>
     <header>
-        <div class="logo">AUTONATION</div>
+        <div class="logo"><img src="autonationLogo.svg" width="40px">AUTONATION</div>
         <nav class="nav-links">
             <a href="#home">Нүүр</a>
             <a href="sell.html">Зарах</a>
@@ -192,7 +201,6 @@
 
     <section class="hero">
         <h1 class="hero-title">Өөрийн байршлаа оруулж ойр буй машины зар үзэх</h1>
-        <p class="hero-subtitle">ХАЙ, ҮЗ, АВ</p>
         <div class="search-bar">
             <input type="text" placeholder="Машины загвар эсвэл нэрээр нь хайгаарай.">
             <button>ХАЙХ</button>
@@ -295,4 +303,3 @@
 </body>
 
 </html>
-cdnjs.cloudflare.com
