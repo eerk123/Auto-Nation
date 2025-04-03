@@ -1,0 +1,79 @@
+.location-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.location-selector label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.location-selector select {
+  padding: 0.75rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.location-selector select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.location-selector select:hover {
+  border-color: var(--primary-color);
+} 
+
+#country {
+    width: 200px;
+    padding: 6px;
+    background: #bababa55;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+  
+  }
+  #selectBtn {
+    padding: 6px 12px;
+    font-size: 16px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #ffffff36  ;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  
+  }
+  
+  #selectBtn:hover{
+    border: 1px solid #5391f5;
+    background: #5391f5;
+    transition: 0.5s;
+  }
+  
+  .start-btn {
+    display: inline-block;
+    text-decoration: none;
+    color:white;
+    border: 1px solid #fff;
+    padding: 12px 34px;
+    font-size: 13px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    
+  }
+  .start-btn:hover{
+    border: 1px solid #5391f5;
+    background:#5391f5;
+    transition: 1s;
+    
+  }
+  

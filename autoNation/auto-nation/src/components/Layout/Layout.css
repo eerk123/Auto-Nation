@@ -1,0 +1,61 @@
+/* Google Fonts-ийн импорт */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* Глобал CSS хувьсагчууд */
+:root {
+  --primary-color: #6366f1;      /* Үндсэн өнгө */
+  --secondary-color: #818cf8;    /* Туслах өнгө */
+  --accent-color: #f472b6;       /* Онцлох өнгө */
+  --text-color: #1f2937;         /* Үндсэн текстийн өнгө */
+  --text-light: #6b7280;         /* Хөнгөн текстийн өнгө */
+  --background-color: #f9fafb;   /* Дэвсгэр өнгө */
+  --white: #ffffff;              /* Цагаан өнгө */
+  --glass-bg: rgba(255, 255, 255, 0.7);     /* Шилэн дэвсгэр */
+  --glass-border: rgba(255, 255, 255, 0.2); /* Шилэн хүрээ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);      /* Жижиг сүүдэр */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Ердийн сүүдэр */
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Том сүүдэр */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Шилжилтийн эффект */
+  --border-radius: 16px;         /* Ердийн булангийн радиус */
+  --border-radius-sm: 8px;       /* Жижиг булангийн радиус */
+}
+
+/* Бүх элементүүдийн үндсэн тохиргоо */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Space Grotesk", sans-serif;
+}
+
+/* Body элементийн тохиргоо */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Цэсний хэсгийн тохиргоо */
+nav {
+  background-color: var(--glass-bg);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+nav img.logo {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+} 

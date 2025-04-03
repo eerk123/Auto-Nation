@@ -1,6 +1,12 @@
-import logo from "./logo.svg"
-import "./App.css"
-import { useState, useEffect } from "react"
+import "./components/Layout/Layout.css"
+import { useState } from "react"
+import { Routes, Route } from "react-router-dom"
+import Layout from "./components/Layout"
+import Home from "./pages/Home"
+import Sell from "./components/Sell"
+import CarList from "./components/CarList"
+import Login from "./pages/Login"
+import Signup from "./pages/Signup"
 
 function App() {
   const [cars] = useState([
@@ -20,9 +26,31 @@ function App() {
     },
   ])
 
+  // Authentication state
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  // Car display and modal state
   const [showModal, setShowModal] = useState(false)
   const [selectedCar, setSelectedCar] = useState(null)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  // Location and search state
+  const [selectedLocation, setSelectedLocation] = useState("ub")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedBrand, setSelectedBrand] = useState("")
+  const [selectedManufacturer, setSelectedManufacturer] = useState("")
+
+  const handleLocationChange = (e) => {
+    setSelectedLocation(e.target.value)
+  }
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    console.log("Searching for:", {
+      searchQuery,
+      selectedBrand,
+      selectedManufacturer,
+    })
+  }
 
   const showCarModal = (car) => {
     setSelectedCar(car)
@@ -35,85 +63,50 @@ function App() {
   }
 
   return (
-    <div>
-      <header>
-        <div className="logo">AUTONATION</div>
-        <nav className="nav-links">
-          <div>dsdfsvcvxd</div>
-          <a href="#home">Home</a>
-          <a href="#market">Sell</a>
-          {!isLoggedIn ? (
-            <a href="#login" onClick={handleLogin}>
-              Login
-            </a>
-          ) : (
-            <a href="#profile" id="profileBtn">
-              <i className="fas fa-user"></i>
-            </a>
-          )}
-        </nav>
-      </header>
-
-      <section className="hero">
-        <h1 className="hero-title">Revolutionizing Car Trade</h1>
-        <p className="hero-subtitle">
-          Discover, Buy, and Sell Premium Vehicles
-        </p>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search makes, models, or keywords..."
-          />
-          <button>Search</button>
-        </div>
-      </section>
-
-      <section id="car-list" className="car-grid">
-        {cars.map((car) => (
-          <div key={car.name} className="car-card">
-            <div
-              className="car-image"
-              style={{ backgroundImage: `url(${car.image})` }}
-            >
-              <div className="car-price">${car.price}</div>
+    <Routes>
+      <Route
+        path="/"
+        element={<Layout isLoggedIn={isLoggedIn} handleLogin={handleLogin} />}
+      >
+        <Route
+          index
+          element={
+            <Home
+              selectedLocation={selectedLocation}
+              handleLocationChange={handleLocationChange}
+              searchQuery={searchQuery}
+              selectedBrand={selectedBrand}
+              selectedManufacturer={selectedManufacturer}
+              handleSearch={handleSearch}
+              setSearchQuery={setSearchQuery}
+              setSelectedBrand={setSelectedBrand}
+              setSelectedManufacturer={setSelectedManufacturer}
+              cars={cars}
+              showCarModal={showCarModal}
+              showModal={showModal}
+              selectedCar={selectedCar}
+              setShowModal={setShowModal}
+            />
+          }
+        />
+        <Route path="sell" element={<Sell />} />
+        <Route
+          path="listings"
+          element={<CarList cars={cars} showCarModal={showCarModal} />}
+        />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route
+          path="profile"
+          element={
+            <div className="profile-page">
+              <h2>Хэрэглэгчийн мэдээлэл</h2>
+              <p>Хэрэглэгчийн мэдээллийн хуудас бэлтгэгдэж байна...</p>
             </div>
-            <div className="car-info">
-              <h3>{car.name}</h3>
-              <div className="specs">
-                {car.specs.map((spec, index) => (
-                  <span key={index}>{spec}</span>
-                ))}
-              </div>
-              <button onClick={() => showCarModal(car)}>View Details</button>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {showModal && selectedCar && (
-        <div className="modal" onClick={() => setShowModal(false)}>
-          <div className="modal-content">
-            <span className="close" onClick={() => setShowModal(false)}>
-              &times;
-            </span>
-            <div id="carModalContent">
-              <h2>{selectedCar.name}</h2>
-              <div
-                className="car-image"
-                style={{ backgroundImage: `url(${selectedCar.image})` }}
-              ></div>
-              <div className="specs">
-                {selectedCar.specs.map((spec, index) => (
-                  <span key={index}>{spec}</span>
-                ))}
-              </div>
-              <p>Seller Contact: {selectedCar.contact}</p>
-              <button>Make Offer</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+          }
+        />
+      </Route>
+    </Routes>
   )
 }
 

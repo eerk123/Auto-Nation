@@ -105,7 +105,7 @@ body {
     flex-direction: column;
     text-align: center;
     padding: 2rem;
-    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url("home-background.jpg") center/cover;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url("../public/images/home-background.jpg") center/cover;
 }
 
 .search-bar {
